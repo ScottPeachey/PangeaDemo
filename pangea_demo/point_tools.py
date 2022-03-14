@@ -4,6 +4,8 @@ from typing import List, Tuple, Dict, Any
 from PIL import Image, ImageDraw
 import logging
 
+logger = logging.getLogger()
+
 
 @dataclass
 class Point:
@@ -38,7 +40,7 @@ def world_to_camera(point: "Point", camera: Dict[str, Any]) -> "Point":
 
     pos = camera["pos"]
     f = camera["f"]
-    theta = math.atan2(pos.x, pos.y)
+    theta = math.atan2(pos.y, -pos.x)
     point_in_cam_coords = (point - pos).rotate_z(theta)
     x = point_in_cam_coords.x
     y = point_in_cam_coords.y
@@ -68,6 +70,7 @@ def render_points(
         #  behind the plan and opacity for points in front of the plane
         pass
     for point in points:
+        # TODO: sort points along camera axis to get display ordering correct when drawing
         point_in_image = world_to_camera(point, camera)
         size = 100 / point_in_image.z
         logger.debug(f"World {point}: size {size} at {point_in_image}")
@@ -84,11 +87,17 @@ def fit_points(points: List[Tuple[float, float, float]]) -> Dict[str, float]:
 
 
 if __name__ == "__main__":
-    logger = logging.getLogger()
     logging.basicConfig()
     logger.setLevel(logging.DEBUG)
     req_data = {
-        "points": [(1.0, 0.0, 0.0), (0.0, 0.0, 0.0), (0.0, 1.0, 0.0), (0.0, 0.0, 1.0)],
+        "points": [
+            (1.0, 0.0, 0.0),
+            (0.0, 0.0, 0.0),
+            (0.0, 1.0, 0.0),
+            (0.0, -1.0, 0.0),
+            (0.0, 0.0, 1.0),
+            (0.0, 0.0, -1.0),
+        ],
         "params": {"rotation": 0, "distance": 2.0, "focal_length": 50.0},
     }
     points_in = [Point(*p) for p in req_data["points"]]
