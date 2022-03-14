@@ -13,12 +13,12 @@ Built using python 3.10, conda 4.10.3 (https://docs.conda.io/en/latest/miniconda
 When running the first time and not using an IDE:
 
 ```shell
-conda create --name PangeaDemo --file requirments.txt python=3.10
+conda create --name PangeaDemo python=3.10
+pip install -r requirements.txt
 pre-commit install
 export FLASK_APP=wsgi.py
 flask run
 ```
-
 After the initial set-up set the environment variable
 ```shell
 export FLASK_APP=wsgi.py
@@ -33,3 +33,6 @@ flask run
 
 When contributing to this repository please use the python package `pre-commit` with the configuration files present to 
 ensure your code matches our coding style.
+
+You can run ```flake8``` and ```black .``` manually in the repository root directory while working to make sure your 
+code is compliant before failing during pre-commit.
