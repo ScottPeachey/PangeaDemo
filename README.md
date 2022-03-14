@@ -19,7 +19,11 @@ pre-commit install
 export FLASK_APP=wsgi.py
 flask run
 ```
-After the initial set-up set the environment variable
+After the initial set-up you can run the code by activating the conda environment
+```shell
+conda activate PangeDemo
+```
+set the environment variable
 ```shell
 export FLASK_APP=wsgi.py
 ```
