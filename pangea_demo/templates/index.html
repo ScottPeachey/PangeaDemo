@@ -45,21 +45,27 @@
 <main>
   <div class="Maps">
       <aside>
-        <img src="/img/black.png">
+        <img src="/img/black.png"  id="render-image">
       </aside>
   </div>
   <hr>
   <div class="Design">
     <p>
-      <button type="submit">
+      <button type="submit" id="left-turn">
         <-
       </button>
-      <button type="submit">
+      <button type="submit" id="right-turn">
         ->
       </button>
   </p>
+      <p>
+          rotation:<input type="text" id="rotation" class="view">
+          distance:<input type="text" id="distance" class="view">
+          focal length:<input type="text" id="focal_length" class="view">
+      </p>
   </div>
   <hr>
 </main>
 </body>
+<script src="/src/pointviewer.js"></script>
 </html>
