@@ -45,4 +45,4 @@ def fit_data():
             raise Exception("Error: No point data provided")
     except Exception as e:
         return e, 400
-    return fit_params
+    return fit_params  # TODO: fix serialization
