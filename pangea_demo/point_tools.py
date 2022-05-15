@@ -43,7 +43,7 @@ class Point:
         """Rotate points around the z axis by angle in radians"""
         return Point(
             self.x * math.cos(angle) - self.x * math.sin(angle),
-            self.x * math.sin(angle) + self.x * math.cos(angle),
+            self.y * math.sin(angle) + self.y * math.cos(angle),  # this line was causing the error
             self.z,
         )
 
@@ -58,15 +58,16 @@ def world_to_camera(point: "Point", camera: Dict[str, Any]) -> "Point":
     """Transforms a point to coordinates with the camera at the origin and the x-axis perpendicular to the image
     axis towards the focus."""
 
-    # TODO: there appears to be a bug in this implementation
+    # TODO: there appears to be a bug in this implementation / error found in rotate_z()
     pos = camera["pos"]
     f = camera["f"]
     theta = math.atan2(pos.y, -pos.x)
     point_in_cam_coords = (point - pos).rotate_z(theta)
     x = point_in_cam_coords.x
     y = point_in_cam_coords.y
+    z = point_in_cam_coords.z
     scale = x / f
-    camera_point = Point(scale * point_in_cam_coords.z, scale * y, scale)
+    camera_point = Point(scale * z, scale * y, scale)
     return camera_point
 
 
@@ -136,3 +137,5 @@ if __name__ == "__main__":
     #        o
 
     img_out.show()
+
+

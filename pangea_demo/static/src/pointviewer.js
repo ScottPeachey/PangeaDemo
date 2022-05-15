@@ -50,6 +50,13 @@ async function loadData() {
     setText('focal_length', viewFocalLength);
 
     // TODO: load /data/points.json into pointData
+    let response = await fetch('/data/points.json', {
+        headers: {
+            'Accept': 'application/json'
+        }
+    });
+    pointData = await response.json();
+
     // TODO: connect dataSelect to different point datasets. Either add data to points.json or load multiple points
     //  files
 }
